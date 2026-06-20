@@ -1,16 +1,20 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Plus_Jakarta_Sans } from "next/font/google"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 })
 
 export const metadata: Metadata = {
-  title: "Immo-Gestion",
-  description: "Plateforme de gestion locative",
+  title: {
+    default: "Immo-Gestion",
+    template: "%s | Immo-Gestion",
+  },
+  description: "Plateforme de gestion locative pour proprietaires",
 }
 
 export default function RootLayout({
@@ -20,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${jakarta.variable} font-sans antialiased`}>
         {children}
         <Toaster />
       </body>

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Menu, LayoutDashboard, Building2, Users, MessageSquare, Wallet, FileText, LogOut } from "lucide-react"
+import { Menu, LayoutDashboard, Building2, Users, MessageSquare, Wallet, FileText, Settings, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
@@ -17,6 +17,7 @@ const navItems = [
   { href: "/payments", label: "Paiements", icon: Wallet },
   { href: "/requests", label: "Demandes", icon: MessageSquare },
   { href: "/documents", label: "Documents", icon: FileText },
+  { href: "/settings", label: "Parametres", icon: Settings },
 ]
 
 export function MobileNav() {

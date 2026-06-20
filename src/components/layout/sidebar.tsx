@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Building2, Users, MessageSquare, Wallet, FileText, LogOut } from "lucide-react"
+import { LayoutDashboard, Building2, Users, MessageSquare, Wallet, FileText, Settings, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
@@ -16,6 +16,7 @@ const navItems = [
   { href: "/payments", label: "Paiements", icon: Wallet },
   { href: "/requests", label: "Demandes", icon: MessageSquare, badgeKey: "requestCount" as const },
   { href: "/documents", label: "Documents", icon: FileText },
+  { href: "/settings", label: "Parametres", icon: Settings },
 ]
 
 export function Sidebar({ requestCount = 0 }: { requestCount?: number }) {
