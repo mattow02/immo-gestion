@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { Home } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { activateInvitation } from "../actions"
 import { Button } from "@/components/ui/button"
@@ -20,11 +21,14 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
-  const isTenantMode = invitationCode.trim().length > 0
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
+
+    if (!invitationCode.trim()) {
+      setError("Le code d'invitation est requis")
+      return
+    }
 
     if (password !== confirmPassword) {
       setError("Les mots de passe ne correspondent pas")
@@ -39,15 +43,13 @@ export default function RegisterPage() {
     setLoading(true)
 
     const supabase = createClient()
-    const role = isTenantMode ? "tenant" : "owner"
-
     const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
           full_name: fullName,
-          role,
+          role: "tenant",
         },
       },
     })
@@ -58,29 +60,26 @@ export default function RegisterPage() {
       return
     }
 
-    if (isTenantMode) {
-      const result = await activateInvitation(invitationCode.trim())
-      if (result.error) {
-        setError(result.error)
-        setLoading(false)
-        return
-      }
-      router.push("/tenant")
-    } else {
-      router.push("/")
+    const result = await activateInvitation(invitationCode.trim())
+    if (result.error) {
+      setError(result.error)
+      setLoading(false)
+      return
     }
 
+    router.push("/tenant")
     router.refresh()
   }
 
   return (
     <Card>
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">Creer un compte</CardTitle>
+        <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+          <Home className="h-6 w-6 text-primary" />
+        </div>
+        <CardTitle className="text-2xl font-bold">Espace locataire</CardTitle>
         <CardDescription>
-          {isTenantMode
-            ? "Inscription locataire avec code d'invitation"
-            : "Commencez a gerer vos biens immobiliers"}
+          Inscrivez-vous avec le code fourni par votre proprietaire
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
@@ -90,6 +89,17 @@ export default function RegisterPage() {
               {error}
             </div>
           )}
+          <div className="space-y-2">
+            <Label htmlFor="invitationCode">Code d&apos;invitation *</Label>
+            <Input
+              id="invitationCode"
+              placeholder="Ex: AB3K9XWZ"
+              value={invitationCode}
+              onChange={(e) => setInvitationCode(e.target.value.toUpperCase())}
+              className="font-mono tracking-wider text-center text-lg"
+              required
+            />
+          </div>
           <div className="space-y-2">
             <Label htmlFor="fullName">Nom complet</Label>
             <Input
@@ -131,22 +141,10 @@ export default function RegisterPage() {
               required
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="invitationCode">
-              Code d&apos;invitation <span className="text-muted-foreground">(locataires uniquement)</span>
-            </Label>
-            <Input
-              id="invitationCode"
-              placeholder="Ex: AB3K9XWZ"
-              value={invitationCode}
-              onChange={(e) => setInvitationCode(e.target.value.toUpperCase())}
-              className="font-mono tracking-wider"
-            />
-          </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-3">
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Creation..." : isTenantMode ? "Rejoindre comme locataire" : "Creer mon compte"}
+            {loading ? "Inscription..." : "Rejoindre mon espace locataire"}
           </Button>
           <p className="text-sm text-muted-foreground">
             Deja un compte ?{" "}

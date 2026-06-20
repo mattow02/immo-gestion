@@ -80,7 +80,7 @@ export default function LoginPage() {
             {loading ? "Connexion..." : "Se connecter"}
           </Button>
           <p className="text-sm text-muted-foreground">
-            Pas encore de compte ?{" "}
+            Locataire avec un code d&apos;invitation ?{" "}
             <Link href="/register" className="text-primary underline-offset-4 hover:underline">
               Creer un compte
             </Link>
