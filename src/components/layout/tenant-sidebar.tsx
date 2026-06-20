@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Building2, Users, MessageSquare, LogOut } from "lucide-react"
+import { LayoutDashboard, MessageSquare, Home, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
@@ -10,13 +10,11 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 
 const navItems = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/properties", label: "Mes biens", icon: Building2 },
-  { href: "/tenants", label: "Locataires", icon: Users },
-  { href: "/requests", label: "Demandes", icon: MessageSquare, badgeKey: "requestCount" as const },
+  { href: "/tenant", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/tenant/requests", label: "Mes demandes", icon: MessageSquare },
 ]
 
-export function Sidebar({ requestCount = 0 }: { requestCount?: number }) {
+export function TenantSidebar() {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -30,16 +28,15 @@ export function Sidebar({ requestCount = 0 }: { requestCount?: number }) {
   return (
     <aside className="hidden md:flex md:w-64 md:flex-col md:border-r bg-card">
       <div className="flex h-16 items-center px-6 border-b">
-        <Link href="/" className="flex items-center gap-2">
-          <Building2 className="h-6 w-6 text-primary" />
-          <span className="text-lg font-bold">Immo-Gestion</span>
+        <Link href="/tenant" className="flex items-center gap-2">
+          <Home className="h-6 w-6 text-primary" />
+          <span className="text-lg font-bold">Mon espace</span>
         </Link>
       </div>
       <nav className="flex-1 space-y-1 px-3 py-4">
         {navItems.map((item) => {
           const isActive = pathname === item.href ||
-            (item.href !== "/" && pathname.startsWith(item.href))
-          const badge = item.badgeKey === "requestCount" ? requestCount : 0
+            (item.href !== "/tenant" && pathname.startsWith(item.href))
           return (
             <Link
               key={item.href}
@@ -53,16 +50,6 @@ export function Sidebar({ requestCount = 0 }: { requestCount?: number }) {
             >
               <item.icon className="h-4 w-4" />
               {item.label}
-              {badge > 0 && (
-                <span className={cn(
-                  "ml-auto flex h-5 min-w-5 items-center justify-center rounded-full text-xs font-medium",
-                  isActive
-                    ? "bg-primary-foreground/20 text-primary-foreground"
-                    : "bg-destructive text-destructive-foreground",
-                )}>
-                  {badge}
-                </span>
-              )}
             </Link>
           )
         })}

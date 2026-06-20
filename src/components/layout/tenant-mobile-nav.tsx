@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Menu, LayoutDashboard, Building2, Users, MessageSquare, LogOut } from "lucide-react"
+import { Menu, LayoutDashboard, MessageSquare, Home, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
@@ -11,13 +11,11 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import { Separator } from "@/components/ui/separator"
 
 const navItems = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/properties", label: "Mes biens", icon: Building2 },
-  { href: "/tenants", label: "Locataires", icon: Users },
-  { href: "/requests", label: "Demandes", icon: MessageSquare },
+  { href: "/tenant", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/tenant/requests", label: "Mes demandes", icon: MessageSquare },
 ]
 
-export function MobileNav() {
+export function TenantMobileNav() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
@@ -36,13 +34,13 @@ export function MobileNav() {
       </SheetTrigger>
       <SheetContent side="left" className="w-64 p-0">
         <div className="flex h-16 items-center px-6 border-b">
-          <Building2 className="h-6 w-6 text-primary mr-2" />
-          <SheetTitle>Immo-Gestion</SheetTitle>
+          <Home className="h-6 w-6 text-primary mr-2" />
+          <SheetTitle>Mon espace</SheetTitle>
         </div>
         <nav className="space-y-1 px-3 py-4">
           {navItems.map((item) => {
             const isActive = pathname === item.href ||
-              (item.href !== "/" && pathname.startsWith(item.href))
+              (item.href !== "/tenant" && pathname.startsWith(item.href))
             return (
               <Link
                 key={item.href}

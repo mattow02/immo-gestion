@@ -33,6 +33,7 @@ export async function middleware(request: NextRequest) {
 
   const isAuthPage = pathname.startsWith("/login") || pathname.startsWith("/register")
   const isAuthCallback = pathname.startsWith("/auth/callback")
+  const isTenantRoute = pathname.startsWith("/tenant")
 
   if (isAuthCallback) {
     return supabaseResponse
@@ -44,10 +45,26 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  if (user && isAuthPage) {
-    const url = request.nextUrl.clone()
-    url.pathname = "/"
-    return NextResponse.redirect(url)
+  if (user) {
+    const role = user.user_metadata?.role || "owner"
+
+    if (isAuthPage) {
+      const url = request.nextUrl.clone()
+      url.pathname = role === "tenant" ? "/tenant" : "/"
+      return NextResponse.redirect(url)
+    }
+
+    if (role === "tenant" && !isTenantRoute) {
+      const url = request.nextUrl.clone()
+      url.pathname = "/tenant"
+      return NextResponse.redirect(url)
+    }
+
+    if (role === "owner" && isTenantRoute) {
+      const url = request.nextUrl.clone()
+      url.pathname = "/"
+      return NextResponse.redirect(url)
+    }
   }
 
   return supabaseResponse

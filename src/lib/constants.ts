@@ -42,6 +42,33 @@ export function computeGrossYield(rent: number | null, price: number | null): nu
   return (rent * 12 / price) * 100
 }
 
+export const REQUEST_TYPES = [
+  { value: "repair", label: "Reparation" },
+  { value: "question", label: "Question" },
+  { value: "complaint", label: "Reclamation" },
+  { value: "other", label: "Autre" },
+] as const
+
+export const REQUEST_STATUSES = [
+  { value: "open", label: "Ouvert", color: "bg-blue-100 text-blue-800" },
+  { value: "in_progress", label: "En cours", color: "bg-amber-100 text-amber-800" },
+  { value: "resolved", label: "Resolu", color: "bg-emerald-100 text-emerald-800" },
+  { value: "closed", label: "Ferme", color: "bg-gray-100 text-gray-800" },
+] as const
+
+export const REQUEST_PRIORITIES = [
+  { value: "low", label: "Basse", color: "bg-gray-100 text-gray-700" },
+  { value: "medium", label: "Moyenne", color: "bg-blue-100 text-blue-700" },
+  { value: "high", label: "Haute", color: "bg-orange-100 text-orange-700" },
+  { value: "urgent", label: "Urgente", color: "bg-red-100 text-red-700" },
+] as const
+
+export const TENANCY_STATUSES = [
+  { value: "active", label: "Actif", color: "bg-emerald-100 text-emerald-800" },
+  { value: "ended", label: "Termine", color: "bg-gray-100 text-gray-800" },
+  { value: "pending", label: "En attente", color: "bg-amber-100 text-amber-800" },
+] as const
+
 export function computeNetYield(
   rent: number | null,
   charges: number | null,

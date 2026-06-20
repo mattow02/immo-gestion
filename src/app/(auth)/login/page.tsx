@@ -22,7 +22,7 @@ export default function LoginPage() {
     setLoading(true)
 
     const supabase = createClient()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error) {
       setError(error.message)
@@ -30,7 +30,8 @@ export default function LoginPage() {
       return
     }
 
-    router.push("/")
+    const role = data.user?.user_metadata?.role || "owner"
+    router.push(role === "tenant" ? "/tenant" : "/")
     router.refresh()
   }
 
