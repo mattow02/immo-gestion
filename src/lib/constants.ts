@@ -69,6 +69,40 @@ export const TENANCY_STATUSES = [
   { value: "pending", label: "En attente", color: "bg-amber-100 text-amber-800" },
 ] as const
 
+export const PAYMENT_STATUSES = [
+  { value: "paid", label: "Paye", color: "bg-emerald-100 text-emerald-800" },
+  { value: "pending", label: "En attente", color: "bg-amber-100 text-amber-800" },
+  { value: "late", label: "En retard", color: "bg-red-100 text-red-800" },
+] as const
+
+export const PAYMENT_METHODS = [
+  { value: "virement", label: "Virement" },
+  { value: "cheque", label: "Cheque" },
+  { value: "especes", label: "Especes" },
+  { value: "autre", label: "Autre" },
+] as const
+
+export const DOCUMENT_TYPES = [
+  { value: "bail", label: "Bail" },
+  { value: "etat_des_lieux", label: "Etat des lieux" },
+  { value: "quittance", label: "Quittance" },
+  { value: "assurance", label: "Assurance" },
+  { value: "autre", label: "Autre" },
+] as const
+
+export function formatDate(date: string): string {
+  return new Date(date).toLocaleDateString("fr-FR")
+}
+
+export function formatMonth(date: string): string {
+  return new Date(date).toLocaleDateString("fr-FR", { month: "long", year: "numeric" })
+}
+
+export function getEffectivePaymentStatus(status: string, dueDate: string): string {
+  if (status === "pending" && new Date(dueDate) < new Date()) return "late"
+  return status
+}
+
 export function computeNetYield(
   rent: number | null,
   charges: number | null,

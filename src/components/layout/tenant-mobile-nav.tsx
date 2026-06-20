@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Menu, LayoutDashboard, MessageSquare, Home, LogOut } from "lucide-react"
+import { Menu, LayoutDashboard, MessageSquare, Wallet, FileText, Home, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,9 @@ import { Separator } from "@/components/ui/separator"
 
 const navItems = [
   { href: "/tenant", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/tenant/payments", label: "Mes paiements", icon: Wallet },
   { href: "/tenant/requests", label: "Mes demandes", icon: MessageSquare },
+  { href: "/tenant/documents", label: "Mes documents", icon: FileText },
 ]
 
 export function TenantMobileNav() {

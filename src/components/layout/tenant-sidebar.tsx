@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, MessageSquare, Home, LogOut } from "lucide-react"
+import { LayoutDashboard, MessageSquare, Wallet, FileText, Home, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
@@ -11,7 +11,9 @@ import { Separator } from "@/components/ui/separator"
 
 const navItems = [
   { href: "/tenant", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/tenant/payments", label: "Mes paiements", icon: Wallet },
   { href: "/tenant/requests", label: "Mes demandes", icon: MessageSquare },
+  { href: "/tenant/documents", label: "Mes documents", icon: FileText },
 ]
 
 export function TenantSidebar() {

@@ -62,6 +62,36 @@ export type Tenancy = {
   tenant?: Profile
 }
 
+export type PaymentStatus = "paid" | "pending" | "late"
+export type PaymentMethod = "virement" | "cheque" | "especes" | "autre"
+
+export type Payment = {
+  id: string
+  tenancy_id: string
+  amount: number
+  due_date: string
+  paid_date: string | null
+  status: PaymentStatus
+  payment_method: string | null
+  notes: string | null
+  created_at: string
+  tenancy?: Tenancy & { property?: Property; tenant?: Profile }
+}
+
+export type DocumentType = "bail" | "etat_des_lieux" | "quittance" | "assurance" | "autre"
+
+export type Document = {
+  id: string
+  property_id: string
+  tenancy_id: string | null
+  type: DocumentType
+  name: string
+  file_path: string
+  uploaded_by: string
+  uploaded_at: string
+  property?: Property
+}
+
 export type RequestType = "repair" | "question" | "complaint" | "other"
 export type RequestStatus = "open" | "in_progress" | "resolved" | "closed"
 export type RequestPriority = "low" | "medium" | "high" | "urgent"
