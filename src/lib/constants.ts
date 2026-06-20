@@ -1,0 +1,56 @@
+export const PROPERTY_TYPES = [
+  { value: "apartment", label: "Appartement" },
+  { value: "house", label: "Maison" },
+  { value: "studio", label: "Studio" },
+  { value: "building", label: "Immeuble" },
+] as const
+
+export const PROPERTY_STATUSES = [
+  { value: "rented", label: "Loue", color: "bg-emerald-100 text-emerald-800" },
+  { value: "vacant", label: "Vacant", color: "bg-amber-100 text-amber-800" },
+  { value: "maintenance", label: "Travaux", color: "bg-red-100 text-red-800" },
+] as const
+
+export const DPE_OPTIONS = ["A", "B", "C", "D", "E", "F", "G"] as const
+
+export const DPE_COLORS: Record<string, string> = {
+  A: "bg-green-500",
+  B: "bg-lime-500",
+  C: "bg-yellow-400",
+  D: "bg-orange-400",
+  E: "bg-orange-500",
+  F: "bg-red-400",
+  G: "bg-red-600",
+}
+
+export function formatCurrency(value: number | null | undefined): string {
+  if (value == null) return "-"
+  return new Intl.NumberFormat("fr-FR", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  }).format(value)
+}
+
+export function formatPercent(value: number | null | undefined): string {
+  if (value == null) return "-"
+  return `${value.toFixed(1)}%`
+}
+
+export function computeGrossYield(rent: number | null, price: number | null): number | null {
+  if (!rent || !price || price === 0) return null
+  return (rent * 12 / price) * 100
+}
+
+export function computeNetYield(
+  rent: number | null,
+  charges: number | null,
+  tax: number | null,
+  price: number | null,
+): number | null {
+  if (!rent || !price || price === 0) return null
+  const annualRent = rent * 12
+  const annualCharges = (charges ?? 0) * 12
+  const annualTax = tax ?? 0
+  return ((annualRent - annualCharges - annualTax) / price) * 100
+}
