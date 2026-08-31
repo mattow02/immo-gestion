@@ -33,7 +33,7 @@ export async function middleware(request: NextRequest) {
 
   const isAuthPage = pathname.startsWith("/login") || pathname.startsWith("/register")
   const isAuthCallback = pathname.startsWith("/auth/callback")
-  const isTenantRoute = pathname.startsWith("/tenant")
+  const isTenantRoute = pathname === "/tenant" || pathname.startsWith("/tenant/")
 
   if (isAuthCallback) {
     return supabaseResponse

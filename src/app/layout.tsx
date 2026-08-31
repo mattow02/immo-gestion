@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     template: "%s | Immo-Gestion",
   },
   description: "Plateforme de gestion locative pour proprietaires",
+  icons: { icon: "data:," },
 }
 
 export default function RootLayout({
