@@ -68,7 +68,7 @@ export function CreatePaymentDialog({ tenancies }: { tenancies: TenancyOption[] 
               <option value="">Choisir un bail</option>
               {tenancies.map((t) => (
                 <option key={t.id} value={t.id}>
-                  {t.tenant?.full_name || t.tenant?.email} — {t.property?.name || t.property?.address}
+                  {t.tenant?.full_name || t.tenant?.email} · {t.property?.name || t.property?.address}
                 </option>
               ))}
             </select>

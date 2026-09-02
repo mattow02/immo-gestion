@@ -1,4 +1,4 @@
--- Immo-Gestion — Phase 1 Schema
+-- Immo-Gestion : Phase 1 Schema
 -- Run this in the Supabase SQL Editor
 
 -- ============================================

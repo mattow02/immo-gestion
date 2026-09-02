@@ -28,7 +28,7 @@ export function PropertyForm({ action, defaultValues, submitLabel }: Props) {
         setError(result.error)
       }
     } catch {
-      // redirect throws — expected
+      // redirect throws : expected
     } finally {
       setLoading(false)
     }

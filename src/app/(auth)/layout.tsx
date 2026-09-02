@@ -25,7 +25,7 @@ export default function AuthLayout({
               Gerez vos biens<br />en toute simplicite
             </h1>
             <p className="text-lg text-primary-foreground/70 max-w-md">
-              Suivi des loyers, gestion des locataires, documents et quittances — tout au meme endroit.
+              Suivi des loyers, gestion des locataires, documents et quittances : tout au meme endroit.
             </p>
           </div>
           <p className="text-sm text-primary-foreground/40">

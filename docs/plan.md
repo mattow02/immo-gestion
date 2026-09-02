@@ -1,4 +1,4 @@
-# Immo-Gestion — Plan du projet
+# Immo-Gestion : Plan du projet
 
 ## Vision
 
