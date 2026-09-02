@@ -1,0 +1,35 @@
+name: Vérification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Un jeton en lecture seule par défaut : une action compromise ne doit pas
+# pouvoir écrire dans le dépôt.
+permissions:
+  contents: read
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Style
+        run: npm run lint
+
+      - name: Types
+        run: npx tsc --noEmit
+
+      # Vérifié sans secret : la construction ne doit dépendre d'aucune clé,
+      # sinon personne ne peut contrôler une contribution.
+      - name: Construction
+        run: npm run build
